@@ -40,13 +40,19 @@ Partial Class Form1
         Me.InTermListBox = New System.Windows.Forms.ListBox()
         Me.OutTermListBox = New System.Windows.Forms.ListBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.ServoTrackBar = New System.Windows.Forms.TrackBar()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.ServoStateLabel = New System.Windows.Forms.Label()
+        Me.byte2Label = New System.Windows.Forms.Label()
+        Me.SerEnRadioButton = New System.Windows.Forms.RadioButton()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
+        CType(Me.ServoTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -151,7 +157,7 @@ Partial Class Form1
         'DataInputLabel
         '
         Me.DataInputLabel.AutoSize = True
-        Me.DataInputLabel.Location = New System.Drawing.Point(39, 88)
+        Me.DataInputLabel.Location = New System.Drawing.Point(29, 79)
         Me.DataInputLabel.Name = "DataInputLabel"
         Me.DataInputLabel.Size = New System.Drawing.Size(85, 20)
         Me.DataInputLabel.TabIndex = 70
@@ -175,9 +181,9 @@ Partial Class Form1
         '
         'SendButton
         '
-        Me.SendButton.Location = New System.Drawing.Point(53, 263)
+        Me.SendButton.Location = New System.Drawing.Point(73, 170)
         Me.SendButton.Name = "SendButton"
-        Me.SendButton.Size = New System.Drawing.Size(154, 104)
+        Me.SendButton.Size = New System.Drawing.Size(113, 60)
         Me.SendButton.TabIndex = 67
         Me.SendButton.Text = "Send Packet"
         Me.SendButton.UseVisualStyleBackColor = True
@@ -188,7 +194,7 @@ Partial Class Form1
         Me.InTermListBox.ItemHeight = 20
         Me.InTermListBox.Location = New System.Drawing.Point(532, 19)
         Me.InTermListBox.Name = "InTermListBox"
-        Me.InTermListBox.Size = New System.Drawing.Size(207, 184)
+        Me.InTermListBox.Size = New System.Drawing.Size(211, 244)
         Me.InTermListBox.TabIndex = 66
         '
         'OutTermListBox
@@ -202,6 +208,11 @@ Partial Class Form1
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.SerEnRadioButton)
+        Me.TabPage2.Controls.Add(Me.byte2Label)
+        Me.TabPage2.Controls.Add(Me.ServoStateLabel)
+        Me.TabPage2.Controls.Add(Me.Label1)
+        Me.TabPage2.Controls.Add(Me.ServoTrackBar)
         Me.TabPage2.Controls.Add(Me.DataInputLabel)
         Me.TabPage2.Controls.Add(Me.DataInputClearButton)
         Me.TabPage2.Controls.Add(Me.TextBox1)
@@ -216,6 +227,23 @@ Partial Class Form1
         Me.TabPage2.Size = New System.Drawing.Size(768, 406)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Loop Back Test"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(81, 272)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(105, 20)
+        Me.Label1.TabIndex = 71
+        Me.Label1.Text = "Servo Control"
+        '
+        'ServoTrackBar
+        '
+        Me.ServoTrackBar.Location = New System.Drawing.Point(12, 295)
+        Me.ServoTrackBar.Maximum = 25
+        Me.ServoTrackBar.Name = "ServoTrackBar"
+        Me.ServoTrackBar.Size = New System.Drawing.Size(237, 69)
+        Me.ServoTrackBar.TabIndex = 55
         '
         'TabControl1
         '
@@ -249,9 +277,41 @@ Partial Class Form1
         Me.TabPage4.Text = "TabPage4"
         Me.TabPage4.UseVisualStyleBackColor = True
         '
+        'SerialPort1
+        '
+        '
         'Timer1
         '
         Me.Timer1.Enabled = True
+        '
+        'ServoStateLabel
+        '
+        Me.ServoStateLabel.AutoSize = True
+        Me.ServoStateLabel.Location = New System.Drawing.Point(20, 367)
+        Me.ServoStateLabel.Name = "ServoStateLabel"
+        Me.ServoStateLabel.Size = New System.Drawing.Size(38, 20)
+        Me.ServoStateLabel.TabIndex = 72
+        Me.ServoStateLabel.Text = "Dec"
+        '
+        'byte2Label
+        '
+        Me.byte2Label.AutoSize = True
+        Me.byte2Label.Location = New System.Drawing.Point(198, 367)
+        Me.byte2Label.Name = "byte2Label"
+        Me.byte2Label.Size = New System.Drawing.Size(37, 20)
+        Me.byte2Label.TabIndex = 73
+        Me.byte2Label.Text = "Hex"
+        '
+        'SerEnRadioButton
+        '
+        Me.SerEnRadioButton.AutoSize = True
+        Me.SerEnRadioButton.Location = New System.Drawing.Point(12, 236)
+        Me.SerEnRadioButton.Name = "SerEnRadioButton"
+        Me.SerEnRadioButton.Size = New System.Drawing.Size(193, 24)
+        Me.SerEnRadioButton.TabIndex = 74
+        Me.SerEnRadioButton.TabStop = True
+        Me.SerEnRadioButton.Text = "Servo Control Enabled"
+        Me.SerEnRadioButton.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -265,6 +325,7 @@ Partial Class Form1
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
+        CType(Me.ServoTrackBar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -292,4 +353,9 @@ Partial Class Form1
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents SerialPort1 As IO.Ports.SerialPort
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents Label1 As Label
+    Friend WithEvents ServoTrackBar As TrackBar
+    Friend WithEvents byte2Label As Label
+    Friend WithEvents ServoStateLabel As Label
+    Friend WithEvents SerEnRadioButton As RadioButton
 End Class

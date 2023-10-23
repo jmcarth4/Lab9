@@ -46,6 +46,8 @@ Public Class Form1
 
 
 
+
+
     'Activates selected comport
     Private Sub PortOpenButton_Click(sender As Object, e As EventArgs) Handles PortOpenButton.Click
         If PortOpenButton.Text = "Connect" Then                     'Com port is disconnected. Press button to connect.
@@ -68,6 +70,7 @@ Public Class Form1
             PortOpenButton.Text = "Connect"
         End If
     End Sub
+
 
 
 
@@ -249,6 +252,48 @@ Public Class Form1
         '    Timer1.Enabled = True                                       'Restart Timer
 
     End Sub
+
+
+    Private Sub ServoTrackBar_Scroll(sender As Object, e As EventArgs) Handles ServoTrackBar.Scroll
+        Dim byte2 As String
+        ServoStateLabel.Text = ServoTrackBar.Value
+        byte2Label.Text = Hex(ServoTrackBar.Value)
+        byte2 = "$" & Hex(ServoTrackBar.Value)
+        TextBox1.Text = byte2
+
+        Timer1.Enabled = False                                  'Stop Timer
+
+        Dim dataLen, TXCount As Integer
+        dataLen = Len(TextBox1.Text)   ' get number of characters in Textbox
+
+        dataOut = TextBox1.Text
+
+        If portState = True Then
+            If TextBox1.Text IsNot "" Then                         'Test for null characters
+                Do Until TXCount = dataLen                          'Do once for each character
+                    If SerialPort1.BytesToWrite = 0 Then
+                        'grab Character x using the TXCount as an index pointer
+                        dataOut = TextBox1.Text.ElementAt(TXCount)
+                        SerialPort1.Write(dataOut)     'Sends Character x out
+                        TXCount += 1                   'Increment loop count info
+                    End If
+                Loop
+                TransmitCount += dataLen                'Save total bytes send info
+                OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
+            Else
+                Timer1.Enabled = True  'restart timer
+                Exit Sub
+
+            End If
+
+        Else
+            MsgBox("Please configure and open serial port to procede")  'Failure if port is not open
+            'TextBox1.Text = " "
+        End If
+        Timer1.Enabled = True
+
+    End Sub
+
 
 
     'Asynchronous Serial receive subroutine triggered by serial receive event
