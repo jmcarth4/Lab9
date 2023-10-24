@@ -40,6 +40,7 @@ Partial Class Form1
         Me.InTermListBox = New System.Windows.Forms.ListBox()
         Me.OutTermListBox = New System.Windows.Forms.ListBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.SerEnRadioButton = New System.Windows.Forms.RadioButton()
         Me.byte2Label = New System.Windows.Forms.Label()
         Me.ServoStateLabel = New System.Windows.Forms.Label()
@@ -50,7 +51,8 @@ Partial Class Form1
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TXLabel = New System.Windows.Forms.Label()
+        Me.RXLabel = New System.Windows.Forms.Label()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.ServoTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -69,18 +71,18 @@ Partial Class Form1
         '
         'OutClearButton
         '
-        Me.OutClearButton.Location = New System.Drawing.Point(341, 283)
+        Me.OutClearButton.Location = New System.Drawing.Point(327, 311)
         Me.OutClearButton.Name = "OutClearButton"
-        Me.OutClearButton.Size = New System.Drawing.Size(154, 104)
+        Me.OutClearButton.Size = New System.Drawing.Size(132, 76)
         Me.OutClearButton.TabIndex = 64
         Me.OutClearButton.Text = "Clear data out display"
         Me.OutClearButton.UseVisualStyleBackColor = True
         '
         'InClearButton
         '
-        Me.InClearButton.Location = New System.Drawing.Point(553, 283)
+        Me.InClearButton.Location = New System.Drawing.Point(573, 311)
         Me.InClearButton.Name = "InClearButton"
-        Me.InClearButton.Size = New System.Drawing.Size(154, 104)
+        Me.InClearButton.Size = New System.Drawing.Size(130, 76)
         Me.InClearButton.TabIndex = 63
         Me.InClearButton.Text = "clear data in display"
         Me.InClearButton.UseVisualStyleBackColor = True
@@ -209,6 +211,8 @@ Partial Class Form1
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.RXLabel)
+        Me.TabPage2.Controls.Add(Me.TXLabel)
         Me.TabPage2.Controls.Add(Me.Label2)
         Me.TabPage2.Controls.Add(Me.SerEnRadioButton)
         Me.TabPage2.Controls.Add(Me.byte2Label)
@@ -229,6 +233,15 @@ Partial Class Form1
         Me.TabPage2.Size = New System.Drawing.Size(768, 406)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Loop Back Test"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(235, 272)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(87, 20)
+        Me.Label2.TabIndex = 75
+        Me.Label2.Text = "Characters"
         '
         'SerEnRadioButton
         '
@@ -315,14 +328,23 @@ Partial Class Form1
         '
         Me.Timer1.Enabled = True
         '
-        'Label2
+        'TXLabel
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(235, 272)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(87, 20)
-        Me.Label2.TabIndex = 75
-        Me.Label2.Text = "Characters"
+        Me.TXLabel.AutoSize = True
+        Me.TXLabel.Location = New System.Drawing.Point(373, 272)
+        Me.TXLabel.Name = "TXLabel"
+        Me.TXLabel.Size = New System.Drawing.Size(29, 20)
+        Me.TXLabel.TabIndex = 76
+        Me.TXLabel.Text = "TX"
+        '
+        'RXLabel
+        '
+        Me.RXLabel.AutoSize = True
+        Me.RXLabel.Location = New System.Drawing.Point(627, 266)
+        Me.RXLabel.Name = "RXLabel"
+        Me.RXLabel.Size = New System.Drawing.Size(32, 20)
+        Me.RXLabel.TabIndex = 77
+        Me.RXLabel.Text = "RX"
         '
         'Form1
         '
@@ -370,4 +392,6 @@ Partial Class Form1
     Friend WithEvents ServoStateLabel As Label
     Friend WithEvents SerEnRadioButton As RadioButton
     Friend WithEvents Label2 As Label
+    Friend WithEvents RXLabel As Label
+    Friend WithEvents TXLabel As Label
 End Class
