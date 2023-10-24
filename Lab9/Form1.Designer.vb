@@ -40,6 +40,9 @@ Partial Class Form1
         Me.InTermListBox = New System.Windows.Forms.ListBox()
         Me.OutTermListBox = New System.Windows.Forms.ListBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.SerEnRadioButton = New System.Windows.Forms.RadioButton()
+        Me.byte2Label = New System.Windows.Forms.Label()
+        Me.ServoStateLabel = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ServoTrackBar = New System.Windows.Forms.TrackBar()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
@@ -47,9 +50,7 @@ Partial Class Form1
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.ServoStateLabel = New System.Windows.Forms.Label()
-        Me.byte2Label = New System.Windows.Forms.Label()
-        Me.SerEnRadioButton = New System.Windows.Forms.RadioButton()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.ServoTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -208,6 +209,7 @@ Partial Class Form1
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.Label2)
         Me.TabPage2.Controls.Add(Me.SerEnRadioButton)
         Me.TabPage2.Controls.Add(Me.byte2Label)
         Me.TabPage2.Controls.Add(Me.ServoStateLabel)
@@ -227,6 +229,35 @@ Partial Class Form1
         Me.TabPage2.Size = New System.Drawing.Size(768, 406)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Loop Back Test"
+        '
+        'SerEnRadioButton
+        '
+        Me.SerEnRadioButton.AutoSize = True
+        Me.SerEnRadioButton.Location = New System.Drawing.Point(12, 236)
+        Me.SerEnRadioButton.Name = "SerEnRadioButton"
+        Me.SerEnRadioButton.Size = New System.Drawing.Size(193, 24)
+        Me.SerEnRadioButton.TabIndex = 74
+        Me.SerEnRadioButton.TabStop = True
+        Me.SerEnRadioButton.Text = "Servo Control Enabled"
+        Me.SerEnRadioButton.UseVisualStyleBackColor = True
+        '
+        'byte2Label
+        '
+        Me.byte2Label.AutoSize = True
+        Me.byte2Label.Location = New System.Drawing.Point(198, 367)
+        Me.byte2Label.Name = "byte2Label"
+        Me.byte2Label.Size = New System.Drawing.Size(37, 20)
+        Me.byte2Label.TabIndex = 73
+        Me.byte2Label.Text = "Hex"
+        '
+        'ServoStateLabel
+        '
+        Me.ServoStateLabel.AutoSize = True
+        Me.ServoStateLabel.Location = New System.Drawing.Point(20, 367)
+        Me.ServoStateLabel.Name = "ServoStateLabel"
+        Me.ServoStateLabel.Size = New System.Drawing.Size(38, 20)
+        Me.ServoStateLabel.TabIndex = 72
+        Me.ServoStateLabel.Text = "Dec"
         '
         'Label1
         '
@@ -284,34 +315,14 @@ Partial Class Form1
         '
         Me.Timer1.Enabled = True
         '
-        'ServoStateLabel
+        'Label2
         '
-        Me.ServoStateLabel.AutoSize = True
-        Me.ServoStateLabel.Location = New System.Drawing.Point(20, 367)
-        Me.ServoStateLabel.Name = "ServoStateLabel"
-        Me.ServoStateLabel.Size = New System.Drawing.Size(38, 20)
-        Me.ServoStateLabel.TabIndex = 72
-        Me.ServoStateLabel.Text = "Dec"
-        '
-        'byte2Label
-        '
-        Me.byte2Label.AutoSize = True
-        Me.byte2Label.Location = New System.Drawing.Point(198, 367)
-        Me.byte2Label.Name = "byte2Label"
-        Me.byte2Label.Size = New System.Drawing.Size(37, 20)
-        Me.byte2Label.TabIndex = 73
-        Me.byte2Label.Text = "Hex"
-        '
-        'SerEnRadioButton
-        '
-        Me.SerEnRadioButton.AutoSize = True
-        Me.SerEnRadioButton.Location = New System.Drawing.Point(12, 236)
-        Me.SerEnRadioButton.Name = "SerEnRadioButton"
-        Me.SerEnRadioButton.Size = New System.Drawing.Size(193, 24)
-        Me.SerEnRadioButton.TabIndex = 74
-        Me.SerEnRadioButton.TabStop = True
-        Me.SerEnRadioButton.Text = "Servo Control Enabled"
-        Me.SerEnRadioButton.UseVisualStyleBackColor = True
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(235, 272)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(87, 20)
+        Me.Label2.TabIndex = 75
+        Me.Label2.Text = "Characters"
         '
         'Form1
         '
@@ -358,4 +369,5 @@ Partial Class Form1
     Friend WithEvents byte2Label As Label
     Friend WithEvents ServoStateLabel As Label
     Friend WithEvents SerEnRadioButton As RadioButton
+    Friend WithEvents Label2 As Label
 End Class

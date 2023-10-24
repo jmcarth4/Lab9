@@ -252,14 +252,35 @@ Public Class Form1
         '    Timer1.Enabled = True                                       'Restart Timer
 
     End Sub
+    'numberCharactersB = Len(blueHex)
 
+    '    'Set display of Hex color values to 2 digit display for each color.
+    '    If numberCharatersR < 2 Then
+    '        redDisplay = "0" & redHEX
+    '    Else
+    '        redDisplay = redHEX
+
+    '    End If
 
     Private Sub ServoTrackBar_Scroll(sender As Object, e As EventArgs) Handles ServoTrackBar.Scroll
         Dim byte2 As String
+        Dim numChr As Integer
+        Dim output As String
         ServoStateLabel.Text = ServoTrackBar.Value
         byte2Label.Text = Hex(ServoTrackBar.Value)
-        byte2 = "$" & Hex(ServoTrackBar.Value)
-        TextBox1.Text = byte2
+        byte2 = Hex(ServoTrackBar.Value)
+        numChr = Len(byte2)
+
+        If numChr = 1 Then
+            output = "$" & "0" & byte2
+        Else
+            output = "$" & byte2
+        End If
+
+
+
+        Label2.Text = numChr
+        TextBox1.Text = output
 
         Timer1.Enabled = False                                  'Stop Timer
 
