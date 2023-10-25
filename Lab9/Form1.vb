@@ -151,8 +151,8 @@ Public Class Form1
             End Select
             'Update input listbox with new data
             InTermListBox.Items.Add(Chr(inPut1) & Chr(inPut2) & Chr(inPut3) & Chr(inPut4) & Chr(inPut5) & Chr(inPut6) & Chr(inPut7) & Chr(inPut8))
-            RXLabel.Text = Chr(inPut1) & "" & inPut2 & "" & Chr(inPut3) & inPut4 & inPut5 & inPut6 & inPut7 & inPut8
-            RX2Label.Text = Chr(inPut1) & "" & Hex(inPut2) & "" & Chr(inPut3) & Hex(inPut4) & Hex(inPut5) & Hex(inPut6) & inPut7 & inPut8
+            RXLabel.Text = Chr(inPut1) & "" & inPut2 & "" & Chr(inPut3) & "" & inPut4 & "" & inPut5 ' & inPut6 & inPut7 & inPut8
+            RX2Label.Text = Chr(inPut1) & "" & Hex(inPut2) & "" & Chr(inPut3) & "" & Hex(inPut4) & "" & Hex(inPut5) '& Hex(inPut6) & inPut7 & inPut8
         End If
     End Sub
 
@@ -282,8 +282,8 @@ Public Class Form1
         Dim n3 As Double
         Dim n4 As Double
 
-        n1 = dataIn1 * 4
-        n2 = dataIn2 / 64
+        n1 = dataIn4 * 4
+        n2 = dataIn5 / 64
         n3 = Fix(n1 + n2)
         n4 = 3.3 / 1023
         vPort = n4 * n3
