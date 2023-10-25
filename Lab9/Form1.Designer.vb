@@ -40,6 +40,8 @@ Partial Class Form1
         Me.InTermListBox = New System.Windows.Forms.ListBox()
         Me.OutTermListBox = New System.Windows.Forms.ListBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.TX2Label = New System.Windows.Forms.Label()
+        Me.RX2Label = New System.Windows.Forms.Label()
         Me.RXLabel = New System.Windows.Forms.Label()
         Me.TXLabel = New System.Windows.Forms.Label()
         Me.SerEnRadioButton = New System.Windows.Forms.RadioButton()
@@ -52,8 +54,6 @@ Partial Class Form1
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.RX2Label = New System.Windows.Forms.Label()
-        Me.TX2Label = New System.Windows.Forms.Label()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.ServoTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -236,6 +236,24 @@ Partial Class Form1
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Loop Back Test"
         '
+        'TX2Label
+        '
+        Me.TX2Label.AutoSize = True
+        Me.TX2Label.Location = New System.Drawing.Point(373, 292)
+        Me.TX2Label.Name = "TX2Label"
+        Me.TX2Label.Size = New System.Drawing.Size(63, 20)
+        Me.TX2Label.TabIndex = 79
+        Me.TX2Label.Text = "TXHEX"
+        '
+        'RX2Label
+        '
+        Me.RX2Label.AutoSize = True
+        Me.RX2Label.Location = New System.Drawing.Point(627, 288)
+        Me.RX2Label.Name = "RX2Label"
+        Me.RX2Label.Size = New System.Drawing.Size(66, 20)
+        Me.RX2Label.TabIndex = 78
+        Me.RX2Label.Text = "RXHEX"
+        '
         'RXLabel
         '
         Me.RXLabel.AutoSize = True
@@ -295,7 +313,7 @@ Partial Class Form1
         'ServoTrackBar
         '
         Me.ServoTrackBar.Location = New System.Drawing.Point(12, 295)
-        Me.ServoTrackBar.Maximum = 25
+        Me.ServoTrackBar.Maximum = 21
         Me.ServoTrackBar.Name = "ServoTrackBar"
         Me.ServoTrackBar.Size = New System.Drawing.Size(237, 69)
         Me.ServoTrackBar.TabIndex = 55
@@ -338,24 +356,6 @@ Partial Class Form1
         'Timer1
         '
         Me.Timer1.Enabled = True
-        '
-        'RX2Label
-        '
-        Me.RX2Label.AutoSize = True
-        Me.RX2Label.Location = New System.Drawing.Point(627, 288)
-        Me.RX2Label.Name = "RX2Label"
-        Me.RX2Label.Size = New System.Drawing.Size(66, 20)
-        Me.RX2Label.TabIndex = 78
-        Me.RX2Label.Text = "RXHEX"
-        '
-        'TX2Label
-        '
-        Me.TX2Label.AutoSize = True
-        Me.TX2Label.Location = New System.Drawing.Point(373, 292)
-        Me.TX2Label.Name = "TX2Label"
-        Me.TX2Label.Size = New System.Drawing.Size(63, 20)
-        Me.TX2Label.TabIndex = 79
-        Me.TX2Label.Text = "TXHEX"
         '
         'Form1
         '
