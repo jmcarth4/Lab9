@@ -25,6 +25,7 @@ Public Class Form1
 
     'Loads serial settings when load the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ServoTrackBar.Value = 0
         'Clears old Com Ports
         portState = False                              'Disables serial port
 
@@ -137,8 +138,8 @@ Public Class Form1
             End Select
             'Update input listbox with new data
             InTermListBox.Items.Add(Chr(inPut1) & Chr(inPut2) & Chr(inPut3) & Chr(inPut4) & Chr(inPut5) & Chr(inPut6) & Chr(inPut7) & Chr(inPut8))
-            RXLabel.Text = Chr(inPut1) & "" & Chr(inPut2) & "" & Chr(inPut3) '& inPut4 & inPut5 & inPut6 & inPut7 & inPut8
-
+            RXLabel.Text = Chr(inPut1) & "" & inPut2 & "" & Chr(inPut3) '& inPut4 & inPut5 & inPut6 & inPut7 & inPut8
+            RX2Label.Text = Chr(inPut1) & "" & Hex(inPut2) & "" & Chr(inPut3)
         End If
     End Sub
 
@@ -233,6 +234,7 @@ Public Class Form1
             SerialPort1.Write(TXData, 0, TXData.Length)                    'Write byte array to serial port
             OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
             TXLabel.Text = Chr(TXData(0)) & " " & TXData(1) & " " & Chr(TXData(2))   'Value of byte array displayed for user to see
+            TX2Label.Text = Chr(TXData(0)) & " " & Hex(TXData(1)) & " " & Chr(TXData(2))
         Else
             MsgBox("Please configure and open serial port to procede")
         End If
@@ -295,12 +297,14 @@ Public Class Form1
     Private Sub InClearButton_Click(sender As Object, e As EventArgs) Handles InClearButton.Click
         InTermListBox.Items.Clear()
         RXLabel.Text = " "
+        RX2Label.Text = " "
     End Sub
 
     'Clears sent data list box
     Private Sub OutClearButton_Click(sender As Object, e As EventArgs) Handles OutClearButton.Click
         OutTermListBox.Items.Clear()
         TXLabel.Text = " "
+        TX2Label.Text = " "
     End Sub
 
     'Clears data input text box

@@ -40,7 +40,8 @@ Partial Class Form1
         Me.InTermListBox = New System.Windows.Forms.ListBox()
         Me.OutTermListBox = New System.Windows.Forms.ListBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.RXLabel = New System.Windows.Forms.Label()
+        Me.TXLabel = New System.Windows.Forms.Label()
         Me.SerEnRadioButton = New System.Windows.Forms.RadioButton()
         Me.byte2Label = New System.Windows.Forms.Label()
         Me.ServoStateLabel = New System.Windows.Forms.Label()
@@ -51,8 +52,8 @@ Partial Class Form1
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.TXLabel = New System.Windows.Forms.Label()
-        Me.RXLabel = New System.Windows.Forms.Label()
+        Me.RX2Label = New System.Windows.Forms.Label()
+        Me.TX2Label = New System.Windows.Forms.Label()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.ServoTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -211,9 +212,10 @@ Partial Class Form1
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.TX2Label)
+        Me.TabPage2.Controls.Add(Me.RX2Label)
         Me.TabPage2.Controls.Add(Me.RXLabel)
         Me.TabPage2.Controls.Add(Me.TXLabel)
-        Me.TabPage2.Controls.Add(Me.Label2)
         Me.TabPage2.Controls.Add(Me.SerEnRadioButton)
         Me.TabPage2.Controls.Add(Me.byte2Label)
         Me.TabPage2.Controls.Add(Me.ServoStateLabel)
@@ -234,14 +236,23 @@ Partial Class Form1
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Loop Back Test"
         '
-        'Label2
+        'RXLabel
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(235, 272)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(87, 20)
-        Me.Label2.TabIndex = 75
-        Me.Label2.Text = "Characters"
+        Me.RXLabel.AutoSize = True
+        Me.RXLabel.Location = New System.Drawing.Point(627, 266)
+        Me.RXLabel.Name = "RXLabel"
+        Me.RXLabel.Size = New System.Drawing.Size(32, 20)
+        Me.RXLabel.TabIndex = 77
+        Me.RXLabel.Text = "RX"
+        '
+        'TXLabel
+        '
+        Me.TXLabel.AutoSize = True
+        Me.TXLabel.Location = New System.Drawing.Point(373, 272)
+        Me.TXLabel.Name = "TXLabel"
+        Me.TXLabel.Size = New System.Drawing.Size(29, 20)
+        Me.TXLabel.TabIndex = 76
+        Me.TXLabel.Text = "TX"
         '
         'SerEnRadioButton
         '
@@ -328,23 +339,23 @@ Partial Class Form1
         '
         Me.Timer1.Enabled = True
         '
-        'TXLabel
+        'RX2Label
         '
-        Me.TXLabel.AutoSize = True
-        Me.TXLabel.Location = New System.Drawing.Point(373, 272)
-        Me.TXLabel.Name = "TXLabel"
-        Me.TXLabel.Size = New System.Drawing.Size(29, 20)
-        Me.TXLabel.TabIndex = 76
-        Me.TXLabel.Text = "TX"
+        Me.RX2Label.AutoSize = True
+        Me.RX2Label.Location = New System.Drawing.Point(627, 288)
+        Me.RX2Label.Name = "RX2Label"
+        Me.RX2Label.Size = New System.Drawing.Size(66, 20)
+        Me.RX2Label.TabIndex = 78
+        Me.RX2Label.Text = "RXHEX"
         '
-        'RXLabel
+        'TX2Label
         '
-        Me.RXLabel.AutoSize = True
-        Me.RXLabel.Location = New System.Drawing.Point(627, 266)
-        Me.RXLabel.Name = "RXLabel"
-        Me.RXLabel.Size = New System.Drawing.Size(32, 20)
-        Me.RXLabel.TabIndex = 77
-        Me.RXLabel.Text = "RX"
+        Me.TX2Label.AutoSize = True
+        Me.TX2Label.Location = New System.Drawing.Point(373, 292)
+        Me.TX2Label.Name = "TX2Label"
+        Me.TX2Label.Size = New System.Drawing.Size(63, 20)
+        Me.TX2Label.TabIndex = 79
+        Me.TX2Label.Text = "TXHEX"
         '
         'Form1
         '
@@ -391,7 +402,8 @@ Partial Class Form1
     Friend WithEvents byte2Label As Label
     Friend WithEvents ServoStateLabel As Label
     Friend WithEvents SerEnRadioButton As RadioButton
-    Friend WithEvents Label2 As Label
     Friend WithEvents RXLabel As Label
     Friend WithEvents TXLabel As Label
+    Friend WithEvents TX2Label As Label
+    Friend WithEvents RX2Label As Label
 End Class
