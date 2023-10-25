@@ -14,6 +14,11 @@ Public Class Form1
     Dim newData, readSize As Integer
     Dim dataIn1, dataIn2, dataIn3, dataIn4, dataIn5, dataIn6, dataIn7, dataIn8 As Integer
     Dim TXData(3) As Byte
+    Dim byte2 As String
+    Dim vOut As String                          'Calculated voltage in for analog inputs
+    Dim dOut As String                          'Calculated binary in for analog inputs   
+
+
     'Closes Serial Ports when forms closes
     Private Sub Form1_UnLoad()
         Try
@@ -26,6 +31,7 @@ Public Class Form1
     'Loads serial settings when load the form
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ServoTrackBar.Value = 0
+        AnInCheckBox.Checked = False
         'Clears old Com Ports
         portState = False                              'Disables serial port
 
@@ -91,6 +97,13 @@ Public Class Form1
         PortDataListBox.Items.Add("Parity = " & SerialPort1.Parity)
 
 
+        If portState = True Then
+            'Transmit and receive data from analog inputs when radio button enabled
+            ' If AnInCheckBox.Checked = True Then
+            AnalogIn()
+
+            'End If
+        End If
 
         'updates output listbox
         Dim inPut1, inPut2, inPut3, inPut4, inPut5, inPut6, inPut7, inPut8 As Integer
@@ -138,8 +151,8 @@ Public Class Form1
             End Select
             'Update input listbox with new data
             InTermListBox.Items.Add(Chr(inPut1) & Chr(inPut2) & Chr(inPut3) & Chr(inPut4) & Chr(inPut5) & Chr(inPut6) & Chr(inPut7) & Chr(inPut8))
-            RXLabel.Text = Chr(inPut1) & "" & inPut2 & "" & Chr(inPut3) '& inPut4 & inPut5 & inPut6 & inPut7 & inPut8
-            RX2Label.Text = Chr(inPut1) & "" & Hex(inPut2) & "" & Chr(inPut3)
+            RXLabel.Text = Chr(inPut1) & "" & inPut2 & "" & Chr(inPut3) & inPut4 & inPut5 & inPut6 & inPut7 & inPut8
+            RX2Label.Text = Chr(inPut1) & "" & Hex(inPut2) & "" & Chr(inPut3) & Hex(inPut4) & Hex(inPut5) & Hex(inPut6) & inPut7 & inPut8
         End If
     End Sub
 
@@ -180,6 +193,8 @@ Public Class Form1
     End Sub
 
 
+
+
     'Up dated routine to send all characters in list box
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
         Timer1.Enabled = False                                  'Stop Timer
@@ -218,35 +233,75 @@ Public Class Form1
 
 
     Private Sub ServoTrackBar_Scroll(sender As Object, e As EventArgs) Handles ServoTrackBar.Scroll
-        Dim byte2 As String
+        ' Dim byte2 As String
 
 
         ServoStateLabel.Text = ServoTrackBar.Value
         byte2Label.Text = Hex(ServoTrackBar.Value)
-
         byte2 = ServoTrackBar.Value
-        TXData = {36, CInt(byte2), 35}
+        TXData = {36, CInt(byte2), 0}
+        'TXData(0) = 36
+        'TXData(1) = CInt(byte2)
+        'TXData(2) = 0                   'Sends Null
+
 
         TextBox1.Text = TXData(0) & TXData(1) & TXData(2)
 
+        SendData()
+
+
+
+    End Sub
+
+    'Establishs communication and displays received data from the analog inputs
+    Sub AnalogIn()
+
+
+        If AnInCheckBox.Checked = True Then
+            TXData = {36, CInt(byte2), 35}
+            'TXData(0) = 36                         'Send command for analog in 1
+            'TXData(1) = CInt(byte2)
+            'TXData(2) = 35
+            TextBox1.Text = TXData(0) & TXData(1) & TXData(2)
+            SendData()
+            AnVoltage()
+            VA1Label.Text = vOut                   'Display input voltage
+            DA1Label.Text = dOut                   'Display recieved binary value
+            ' PictureBox1.Height = vOut * 20         'Display voltages  picture box level
+        End If
+
+
+
+    End Sub
+
+    'Converts received byte 1 and 2 to binary value (0 to 1024) and voltage (0 to 3.3)
+    Sub AnVoltage()
+        Dim vPort As Double             'Variables to manipulate received data
+        Dim n1 As Double
+        Dim n2 As Double
+        Dim n3 As Double
+        Dim n4 As Double
+
+        n1 = dataIn1 * 4
+        n2 = dataIn2 / 64
+        n3 = Fix(n1 + n2)
+        n4 = 3.3 / 1023
+        vPort = n4 * n3
+        vOut = Format(vPort, "n")
+        dOut = n3
+    End Sub
+
+
+
+
+    Function SendData() As Byte
         Timer1.Enabled = False                                 'Disable timer when writing to serial port
         If portState = True Then
             SerialPort1.Write(TXData, 0, TXData.Length)                    'Write byte array to serial port
             OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
+            'TXLabel.Text = TXData(0) & TXData(1) & TXData(2)   'Value of byte array displayed for user to see
             TXLabel.Text = Chr(TXData(0)) & " " & TXData(1) & " " & Chr(TXData(2))   'Value of byte array displayed for user to see
             TX2Label.Text = Chr(TXData(0)) & " " & Hex(TXData(1)) & " " & Chr(TXData(2))
-        Else
-            MsgBox("Please configure and open serial port to procede")
-        End If
-        Timer1.Enabled = True
-
-    End Sub
-    Function SendData() As Byte
-        Timer1.Enabled = False                                 'Disable timer when writing to serial port
-        If portState = True Then
-            SerialPort1.Write(TXdata, 0, 3)                    'Write byte array to serial port
-            OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
-            TXLabel.Text = TXData(0) & TXData(1) & TXData(2)   'Value of byte array displayed for user to see
         Else
             MsgBox("Please configure and open serial port to procede")
         End If
