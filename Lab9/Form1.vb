@@ -137,7 +137,7 @@ Public Class Form1
             End Select
             'Update input listbox with new data
             InTermListBox.Items.Add(Chr(inPut1) & Chr(inPut2) & Chr(inPut3) & Chr(inPut4) & Chr(inPut5) & Chr(inPut6) & Chr(inPut7) & Chr(inPut8))
-            RXLabel.Text = Chr(inPut1) & "" & Hex(inPut2) & "" & Chr(inPut3) '& inPut4 & inPut5 & inPut6 & inPut7 & inPut8
+            RXLabel.Text = Chr(inPut1) & "" & Chr(inPut2) & "" & Chr(inPut3) '& inPut4 & inPut5 & inPut6 & inPut7 & inPut8
 
         End If
     End Sub
@@ -237,55 +237,6 @@ Public Class Form1
             MsgBox("Please configure and open serial port to procede")
         End If
         Timer1.Enabled = True
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        'Timer1.Enabled = False                                  'Stop Timer
-
-
-
-
-        'Dim dataLen, TXCount As Integer
-        'dataLen = Len(TextBox1.Text)   ' get number of characters in Textbox
-
-        'dataOut = TextBox1.Text
-
-        'If portState = True Then
-        '    If TextBox1.Text IsNot "" Then                         'Test for null characters
-        '        Do Until TXCount = dataLen                          'Do once for each character
-        '            If SerialPort1.BytesToWrite = 0 Then
-        '                'grab Character x using the TXCount as an index pointer
-        '                dataOut = TextBox1.Text.ElementAt(TXCount)
-        '                SerialPort1.Write(dataOut)     'Sends Character x out
-        '                TXCount += 1                   'Increment loop count info
-        '            End If
-        '        Loop
-        '        TransmitCount += dataLen                'Save total bytes send info
-        '        OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
-        '        TXLabel.Text = TextBox1.Text
-        '    Else
-        '        Timer1.Enabled = True  'restart timer
-        '        Exit Sub
-
-        '    End If
-
-        'Else
-        '    MsgBox("Please configure and open serial port to procede")  'Failure if port is not open
-        '    'TextBox1.Text = " "
-        'End If
-        'Timer1.Enabled = True
 
     End Sub
     Function SendData() As Byte
