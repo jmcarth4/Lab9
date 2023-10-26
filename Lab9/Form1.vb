@@ -285,7 +285,7 @@ Public Class Form1
         n1 = dataIn4 * 4
         n2 = dataIn5 / 64
         n3 = Fix(n1 + n2)
-        n4 = 3.3 / 1023
+        n4 = 5 / 1023
         vPort = n4 * n3
         vOut = Format(vPort, "n")
         dOut = n3
