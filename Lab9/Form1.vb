@@ -17,7 +17,7 @@ Public Class Form1
     Dim byte2 As String
     Dim vOut As String                          'Calculated voltage in for analog inputs
     Dim dOut As String                          'Calculated binary in for analog inputs   
-
+    Dim tOut As String
 
     'Closes Serial Ports when forms closes
     Private Sub Form1_UnLoad()
@@ -151,8 +151,8 @@ Public Class Form1
             End Select
             'Update input listbox with new data
             InTermListBox.Items.Add(Chr(inPut1) & Chr(inPut2) & Chr(inPut3) & Chr(inPut4) & Chr(inPut5) & Chr(inPut6) & Chr(inPut7) & Chr(inPut8))
-            RXLabel.Text = Chr(inPut1) & "" & inPut2 & "" & Chr(inPut3) & "" & inPut4 & "" & inPut5 ' & inPut6 & inPut7 & inPut8
-            RX2Label.Text = Chr(inPut1) & "" & Hex(inPut2) & "" & Chr(inPut3) & "" & Hex(inPut4) & "" & Hex(inPut5) '& Hex(inPut6) & inPut7 & inPut8
+            RXLabel.Text = Chr(inPut1) & " " & inPut2 & " " & Chr(inPut3) & " " & inPut4 & " " & inPut5 ' & inPut6 & inPut7 & inPut8
+            RX2Label.Text = Chr(inPut1) & " " & Hex(inPut2) & " " & Chr(inPut3) & " " & Hex(inPut4) & " " & Hex(inPut5) '& Hex(inPut6) & inPut7 & inPut8
         End If
     End Sub
 
@@ -195,6 +195,9 @@ Public Class Form1
 
 
 
+
+
+
     'Up dated routine to send all characters in list box
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
         Timer1.Enabled = False                                  'Stop Timer
@@ -231,11 +234,7 @@ Public Class Form1
 
     End Sub
 
-
-    Private Sub ServoTrackBar_Scroll(sender As Object, e As EventArgs) Handles ServoTrackBar.Scroll
-        ' Dim byte2 As String
-
-
+    Private Sub ServoTrackBar_Scroll_1(sender As Object, e As EventArgs) Handles ServoTrackBar.Scroll
         ServoStateLabel.Text = ServoTrackBar.Value
         byte2Label.Text = Hex(ServoTrackBar.Value)
         byte2 = ServoTrackBar.Value
@@ -249,9 +248,9 @@ Public Class Form1
 
         SendData()
 
-
-
     End Sub
+
+
 
     'Establishs communication and displays received data from the analog inputs
     Sub AnalogIn()
@@ -267,7 +266,10 @@ Public Class Form1
             AnVoltage()
             VA1Label.Text = vOut                   'Display input voltage
             DA1Label.Text = dOut                   'Display recieved binary value
-            ' PictureBox1.Height = vOut * 20         'Display voltages  picture box level
+            If TempCheckBox.Checked = True Then
+                TempLabel.Text = tOut
+            End If
+
         End If
 
 
@@ -289,6 +291,9 @@ Public Class Form1
         vPort = n4 * n3
         vOut = Format(vPort, "n")
         dOut = n3
+
+        tOut = vOut / 0.01
+
     End Sub
 
 

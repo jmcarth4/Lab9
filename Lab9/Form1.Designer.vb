@@ -40,6 +40,8 @@ Partial Class Form1
         Me.InTermListBox = New System.Windows.Forms.ListBox()
         Me.OutTermListBox = New System.Windows.Forms.ListBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.DataGroupBox = New System.Windows.Forms.GroupBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.RX2Label = New System.Windows.Forms.Label()
@@ -50,6 +52,8 @@ Partial Class Form1
         Me.TXLabel = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.AInGroupBox = New System.Windows.Forms.GroupBox()
+        Me.TempCheckBox = New System.Windows.Forms.CheckBox()
+        Me.AnInCheckBox = New System.Windows.Forms.CheckBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.VA1Label = New System.Windows.Forms.Label()
@@ -59,19 +63,17 @@ Partial Class Form1
         Me.ServoTrackBar = New System.Windows.Forms.TrackBar()
         Me.ServoStateLabel = New System.Windows.Forms.Label()
         Me.byte2Label = New System.Windows.Forms.Label()
-        Me.TabControl1 = New System.Windows.Forms.TabControl()
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.AnInCheckBox = New System.Windows.Forms.CheckBox()
+        Me.TempLabel = New System.Windows.Forms.Label()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
+        Me.TabControl1.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
         Me.DataGroupBox.SuspendLayout()
         Me.AInGroupBox.SuspendLayout()
         Me.ServoGroupBox.SuspendLayout()
         CType(Me.ServoTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabControl1.SuspendLayout()
         Me.SuspendLayout()
         '
         'QuitButton
@@ -226,9 +228,6 @@ Partial Class Form1
         '
         'TabPage2
         '
-        Me.TabPage2.Controls.Add(Me.DataGroupBox)
-        Me.TabPage2.Controls.Add(Me.AInGroupBox)
-        Me.TabPage2.Controls.Add(Me.ServoGroupBox)
         Me.TabPage2.Controls.Add(Me.DataInputLabel)
         Me.TabPage2.Controls.Add(Me.DataInputClearButton)
         Me.TabPage2.Controls.Add(Me.TextBox1)
@@ -244,6 +243,30 @@ Partial Class Form1
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Loop Back Test"
         '
+        'TabControl1
+        '
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
+        Me.TabControl1.Location = New System.Drawing.Point(12, 12)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.Size = New System.Drawing.Size(815, 486)
+        Me.TabControl1.TabIndex = 53
+        '
+        'TabPage3
+        '
+        Me.TabPage3.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.TabPage3.Controls.Add(Me.DataGroupBox)
+        Me.TabPage3.Controls.Add(Me.AInGroupBox)
+        Me.TabPage3.Controls.Add(Me.ServoGroupBox)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(807, 453)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Lab 9"
+        '
         'DataGroupBox
         '
         Me.DataGroupBox.Controls.Add(Me.Label4)
@@ -254,10 +277,10 @@ Partial Class Form1
         Me.DataGroupBox.Controls.Add(Me.TX2Label)
         Me.DataGroupBox.Controls.Add(Me.TXLabel)
         Me.DataGroupBox.Controls.Add(Me.Label8)
-        Me.DataGroupBox.Location = New System.Drawing.Point(284, 309)
+        Me.DataGroupBox.Location = New System.Drawing.Point(174, 255)
         Me.DataGroupBox.Name = "DataGroupBox"
         Me.DataGroupBox.Size = New System.Drawing.Size(459, 141)
-        Me.DataGroupBox.TabIndex = 216
+        Me.DataGroupBox.TabIndex = 217
         Me.DataGroupBox.TabStop = False
         Me.DataGroupBox.Text = "RX TX Data"
         '
@@ -335,22 +358,44 @@ Partial Class Form1
         '
         'AInGroupBox
         '
+        Me.AInGroupBox.Controls.Add(Me.TempLabel)
+        Me.AInGroupBox.Controls.Add(Me.TempCheckBox)
         Me.AInGroupBox.Controls.Add(Me.AnInCheckBox)
         Me.AInGroupBox.Controls.Add(Me.Label6)
         Me.AInGroupBox.Controls.Add(Me.Label5)
         Me.AInGroupBox.Controls.Add(Me.VA1Label)
         Me.AInGroupBox.Controls.Add(Me.DA1Label)
-        Me.AInGroupBox.Location = New System.Drawing.Point(14, 295)
+        Me.AInGroupBox.Location = New System.Drawing.Point(310, 45)
         Me.AInGroupBox.Name = "AInGroupBox"
-        Me.AInGroupBox.Size = New System.Drawing.Size(237, 149)
-        Me.AInGroupBox.TabIndex = 209
+        Me.AInGroupBox.Size = New System.Drawing.Size(286, 162)
+        Me.AInGroupBox.TabIndex = 212
         Me.AInGroupBox.TabStop = False
         Me.AInGroupBox.Text = "Analog  Input"
+        '
+        'TempCheckBox
+        '
+        Me.TempCheckBox.AutoSize = True
+        Me.TempCheckBox.Location = New System.Drawing.Point(10, 105)
+        Me.TempCheckBox.Name = "TempCheckBox"
+        Me.TempCheckBox.Size = New System.Drawing.Size(176, 24)
+        Me.TempCheckBox.TabIndex = 224
+        Me.TempCheckBox.Text = " Temperture Sensor"
+        Me.TempCheckBox.UseVisualStyleBackColor = True
+        '
+        'AnInCheckBox
+        '
+        Me.AnInCheckBox.AutoSize = True
+        Me.AnInCheckBox.Location = New System.Drawing.Point(27, 25)
+        Me.AnInCheckBox.Name = "AnInCheckBox"
+        Me.AnInCheckBox.Size = New System.Drawing.Size(180, 24)
+        Me.AnInCheckBox.TabIndex = 223
+        Me.AnInCheckBox.Text = "Enable Analog Input"
+        Me.AnInCheckBox.UseVisualStyleBackColor = True
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(43, 64)
+        Me.Label6.Location = New System.Drawing.Point(34, 52)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(82, 20)
         Me.Label6.TabIndex = 209
@@ -359,7 +404,7 @@ Partial Class Form1
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(136, 64)
+        Me.Label5.Location = New System.Drawing.Point(136, 52)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(71, 20)
         Me.Label5.TabIndex = 206
@@ -368,20 +413,20 @@ Partial Class Form1
         'VA1Label
         '
         Me.VA1Label.AutoSize = True
-        Me.VA1Label.Location = New System.Drawing.Point(62, 109)
+        Me.VA1Label.Location = New System.Drawing.Point(48, 78)
         Me.VA1Label.Name = "VA1Label"
-        Me.VA1Label.Size = New System.Drawing.Size(44, 20)
+        Me.VA1Label.Size = New System.Drawing.Size(31, 20)
         Me.VA1Label.TabIndex = 209
-        Me.VA1Label.Text = "VA1 "
+        Me.VA1Label.Text = "VA"
         '
         'DA1Label
         '
         Me.DA1Label.AutoSize = True
-        Me.DA1Label.Location = New System.Drawing.Point(136, 109)
+        Me.DA1Label.Location = New System.Drawing.Point(143, 78)
         Me.DA1Label.Name = "DA1Label"
-        Me.DA1Label.Size = New System.Drawing.Size(45, 20)
+        Me.DA1Label.Size = New System.Drawing.Size(40, 20)
         Me.DA1Label.TabIndex = 213
-        Me.DA1Label.Text = "DA1 "
+        Me.DA1Label.Text = "Bits "
         '
         'ServoGroupBox
         '
@@ -389,10 +434,10 @@ Partial Class Form1
         Me.ServoGroupBox.Controls.Add(Me.ServoTrackBar)
         Me.ServoGroupBox.Controls.Add(Me.ServoStateLabel)
         Me.ServoGroupBox.Controls.Add(Me.byte2Label)
-        Me.ServoGroupBox.Location = New System.Drawing.Point(14, 127)
+        Me.ServoGroupBox.Location = New System.Drawing.Point(35, 45)
         Me.ServoGroupBox.Name = "ServoGroupBox"
         Me.ServoGroupBox.Size = New System.Drawing.Size(249, 162)
-        Me.ServoGroupBox.TabIndex = 210
+        Me.ServoGroupBox.TabIndex = 211
         Me.ServoGroupBox.TabStop = False
         Me.ServoGroupBox.Text = "Servo Control"
         '
@@ -431,38 +476,6 @@ Partial Class Form1
         Me.byte2Label.TabIndex = 73
         Me.byte2Label.Text = "Hex"
         '
-        'TabControl1
-        '
-        Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Controls.Add(Me.TabPage4)
-        Me.TabControl1.Location = New System.Drawing.Point(12, 12)
-        Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(815, 486)
-        Me.TabControl1.TabIndex = 53
-        '
-        'TabPage3
-        '
-        Me.TabPage3.Location = New System.Drawing.Point(4, 29)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(807, 453)
-        Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "TabPage3"
-        Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'TabPage4
-        '
-        Me.TabPage4.Location = New System.Drawing.Point(4, 29)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(807, 453)
-        Me.TabPage4.TabIndex = 3
-        Me.TabPage4.Text = "TabPage4"
-        Me.TabPage4.UseVisualStyleBackColor = True
-        '
         'SerialPort1
         '
         '
@@ -470,15 +483,14 @@ Partial Class Form1
         '
         Me.Timer1.Enabled = True
         '
-        'AnInCheckBox
+        'TempLabel
         '
-        Me.AnInCheckBox.AutoSize = True
-        Me.AnInCheckBox.Location = New System.Drawing.Point(27, 25)
-        Me.AnInCheckBox.Name = "AnInCheckBox"
-        Me.AnInCheckBox.Size = New System.Drawing.Size(180, 24)
-        Me.AnInCheckBox.TabIndex = 223
-        Me.AnInCheckBox.Text = "Enable Analog Input"
-        Me.AnInCheckBox.UseVisualStyleBackColor = True
+        Me.TempLabel.AutoSize = True
+        Me.TempLabel.Location = New System.Drawing.Point(88, 132)
+        Me.TempLabel.Name = "TempLabel"
+        Me.TempLabel.Size = New System.Drawing.Size(19, 20)
+        Me.TempLabel.TabIndex = 225
+        Me.TempLabel.Text = "F"
         '
         'Form1
         '
@@ -492,6 +504,8 @@ Partial Class Form1
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
+        Me.TabControl1.ResumeLayout(False)
+        Me.TabPage3.ResumeLayout(False)
         Me.DataGroupBox.ResumeLayout(False)
         Me.DataGroupBox.PerformLayout()
         Me.AInGroupBox.ResumeLayout(False)
@@ -499,7 +513,6 @@ Partial Class Form1
         Me.ServoGroupBox.ResumeLayout(False)
         Me.ServoGroupBox.PerformLayout()
         CType(Me.ServoTrackBar, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabControl1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -523,20 +536,8 @@ Partial Class Form1
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents TabPage4 As TabPage
     Friend WithEvents SerialPort1 As IO.Ports.SerialPort
     Friend WithEvents Timer1 As Timer
-    Friend WithEvents Label1 As Label
-    Friend WithEvents ServoTrackBar As TrackBar
-    Friend WithEvents byte2Label As Label
-    Friend WithEvents ServoStateLabel As Label
-    Friend WithEvents AInGroupBox As GroupBox
-    Friend WithEvents Label6 As Label
-    Friend WithEvents Label5 As Label
-    Friend WithEvents VA1Label As Label
-    Friend WithEvents DA1Label As Label
-    Friend WithEvents ServoGroupBox As GroupBox
-    Friend WithEvents Label8 As Label
     Friend WithEvents DataGroupBox As GroupBox
     Friend WithEvents Label4 As Label
     Friend WithEvents RX2Label As Label
@@ -545,5 +546,18 @@ Partial Class Form1
     Friend WithEvents Label2 As Label
     Friend WithEvents TX2Label As Label
     Friend WithEvents TXLabel As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents AInGroupBox As GroupBox
+    Friend WithEvents TempCheckBox As CheckBox
     Friend WithEvents AnInCheckBox As CheckBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents VA1Label As Label
+    Friend WithEvents DA1Label As Label
+    Friend WithEvents ServoGroupBox As GroupBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents ServoTrackBar As TrackBar
+    Friend WithEvents ServoStateLabel As Label
+    Friend WithEvents byte2Label As Label
+    Friend WithEvents TempLabel As Label
 End Class
