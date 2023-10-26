@@ -34,6 +34,8 @@ Public Class Form1
         AnInCheckBox.Checked = False
         TempLabel.Text = Chr(176) & Chr(70)
         TempCheckBox.Checked = False
+        VA1Label.Text = "0"
+        DA1Label.Text = "0"
         'Clears old Com Ports
         portState = False                              'Disables serial port
 
