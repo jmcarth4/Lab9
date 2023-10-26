@@ -32,6 +32,8 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ServoTrackBar.Value = 0
         AnInCheckBox.Checked = False
+        TempLabel.Text = Chr(176) & Chr(70)
+        TempCheckBox.Checked = False
         'Clears old Com Ports
         portState = False                              'Disables serial port
 
@@ -267,7 +269,10 @@ Public Class Form1
             VA1Label.Text = vOut                   'Display input voltage
             DA1Label.Text = dOut                   'Display recieved binary value
             If TempCheckBox.Checked = True Then
-                TempLabel.Text = tOut
+                TempLabel.Text = tOut & Chr(176) & Chr(70)
+            ElseIf TempCheckBox.Checked = False Then
+                TempLabel.Text = Chr(176) & Chr(70)
+
             End If
 
         End If
