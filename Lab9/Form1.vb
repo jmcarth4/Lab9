@@ -1,23 +1,21 @@
 ﻿
-'Jessica McArthur
-'Class example....terminals 
-'Lab 9 GUI
-
-'Imports System.Text.RegularExpressions
+'Jessica McArthur 
+'Lab 9 GUI 
+'Serial Communication with PIC 16f883
+'27 Oct 2023
 
 Public Class Form1
-    Dim portState As Boolean
-    Dim receiveByte(18) As Byte        'Receive Data Bytes
-
-    Public dataOut As String
-    Dim Val, receiveCount, TransmitCount As Double
-    Dim newData, readSize As Integer
+    Dim portState As Boolean                     'Enable serial port
+    Dim receiveByte(18) As Byte                  'Receive Data Bytes
+    Public dataOut As String                     'Sends data out for loop back test
+    Dim receiveCount, TransmitCount As Double    'Used to receive and transmit asynchronous
+    Dim newData As Integer
     Dim dataIn1, dataIn2, dataIn3, dataIn4, dataIn5, dataIn6, dataIn7, dataIn8 As Integer
-    Dim TXData(3) As Byte
-    Dim byte2 As String
-    Dim vOut As String                          'Calculated voltage in for analog inputs
-    Dim dOut As String                          'Calculated binary in for analog inputs   
-    Dim tOut As String
+    Dim TXData(3) As Byte                       'Byte array to transmit data
+    Dim byte2 As String                         'decmial value of byte 2
+    Dim vOut As String                          'Calculated voltage in for ADC input
+    Dim dOut As String                          'Calculated binary in for ADC input  
+    Dim tOut As String                          'Calculated temperature out for temperature sensor
 
     'Closes Serial Ports when forms closes
     Private Sub Form1_UnLoad()
@@ -28,23 +26,21 @@ Public Class Form1
         End Try
     End Sub
 
-    'Loads serial settings when load the form
+    'Loads serial settings when load the form and sets RX and TX controls to 0 or off
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ServoTrackBar.Value = 0
         AnInCheckBox.Checked = False
-        TempLabel.Text = Chr(176) & Chr(70)
+        TempLabel.Text = Chr(176) & Chr(70)            'Displays "°F" 
         TempCheckBox.Checked = False
         VA1Label.Text = "0"
         DA1Label.Text = "0"
         'Clears old Com Ports
         portState = False                              'Disables serial port
-
         SerialPort1.BaudRate = 9600                    '9600 baud rate
         SerialPort1.DataBits = 8                       '8 data bits
         SerialPort1.StopBits = IO.Ports.StopBits.One   '1 stop bit
         SerialPort1.Parity = IO.Ports.Parity.None      'no Parity
-
-        Timer1.Enabled = True                           'timer set to 100 ms
+        Timer1.Enabled = True                          'timer set to 100 ms
     End Sub
 
     'Finds and list all com ports present on the system
@@ -54,10 +50,6 @@ Public Class Form1
             ComPortListBox.Items.Add(sp)                                'Loads all current com ports to list box
         Next
     End Sub
-
-
-
-
 
     'Activates selected comport
     Private Sub PortOpenButton_Click(sender As Object, e As EventArgs) Handles PortOpenButton.Click
@@ -82,14 +74,7 @@ Public Class Form1
         End If
     End Sub
 
-
-
-
-
-
-
-
-    'Displays serial port data in a list box
+    'Displays serial port data in a list box for loop back test. Sends tx signal when using ADC of PIC
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Dim dataIn As String
         dataIn = ""
@@ -100,13 +85,8 @@ Public Class Form1
         PortDataListBox.Items.Add("Stop bits = " & SerialPort1.StopBits)
         PortDataListBox.Items.Add("Parity = " & SerialPort1.Parity)
 
-
-        If portState = True Then
-            'Transmit and receive data from analog inputs when radio button enabled
-            ' If AnInCheckBox.Checked = True Then
-            AnalogIn()
-
-            'End If
+        If portState = True Then   'Only send data when com port is connected
+            AnalogIn()   'Transmit and receive data from ADC
         End If
 
         'updates output listbox
@@ -155,15 +135,18 @@ Public Class Form1
             End Select
             'Update input listbox with new data
             InTermListBox.Items.Add(Chr(inPut1) & Chr(inPut2) & Chr(inPut3) & Chr(inPut4) & Chr(inPut5) & Chr(inPut6) & Chr(inPut7) & Chr(inPut8))
-            RXLabel.Text = Chr(inPut1) & " " & inPut2 & " " & Chr(inPut3) & " " & inPut4 & " " & inPut5 ' & inPut6 & inPut7 & inPut8
-            RX2Label.Text = Chr(inPut1) & " " & Hex(inPut2) & " " & Chr(inPut3) & " " & Hex(inPut4) & " " & Hex(inPut5) '& Hex(inPut6) & inPut7 & inPut8
+            'Load input from PIC into display labels
+            'Handshakes displayed as ascii characters
+            'One label shows other data in decimal values the other as hex 
+            RXLabel.Text = Chr(inPut1) & " " & inPut2 & " " & Chr(inPut3) & " " & inPut4 & " " & inPut5
+            RX2Label.Text = Chr(inPut1) & " " & Hex(inPut2) & " " & Chr(inPut3) & " " & Hex(inPut4) & " " & Hex(inPut5)
         End If
     End Sub
 
+    'Connects com port in list box index
     Private Sub ListBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComPortListBox.SelectedIndexChanged
         Try
             SerialPort1.Close()                             'Try to close port before change
-
         Catch ex As Exception
 
         End Try
@@ -177,9 +160,8 @@ Public Class Form1
         End Try
     End Sub
 
-
-
     'Loads baud rate values into list box
+    'Not used in this code
     Private Sub BaudRateButton_Click(sender As Object, e As EventArgs) Handles BaudRateButton.Click
         BaudRateListBox.Items.Clear()                          'Clear list box and load baud rate values
         BaudRateListBox.Items.Add(1200)
@@ -196,22 +178,16 @@ Public Class Form1
         BaudRateListBox.Items.Add(921600)
     End Sub
 
-
-
-
-
-
-
-    'Up dated routine to send all characters in list box
+    'Send all characters in list box (for loopback test)
     Private Sub SendButton_Click(sender As Object, e As EventArgs) Handles SendButton.Click
-        Timer1.Enabled = False                                  'Stop Timer
+        Timer1.Enabled = False                                      'Stop Timer
         Dim dataLen, TXCount As Integer
-        dataLen = Len(TextBox1.Text)   ' get number of characters in Textbox
+        dataLen = Len(TextBox1.Text)                'Get number of characters in Textbox
 
         dataOut = TextBox1.Text
 
         If portState = True Then
-            If TextBox1.Text IsNot "" Then                         'Test for null characters
+            If TextBox1.Text IsNot "" Then                          'Test for null characters
                 Do Until TXCount = dataLen                          'Do once for each character
                     If SerialPort1.BytesToWrite = 0 Then
                         'grab Character x using the TXCount as an index pointer
@@ -220,13 +196,12 @@ Public Class Form1
                         TXCount += 1                   'Increment loop count info
                     End If
                 Loop
-                TransmitCount += dataLen                'Save total bytes send info
-                OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
+                TransmitCount += dataLen                    'Save total bytes send info
+                OutTermListBox.Items.Add(TextBox1.Text)     'Update output list box
                 TXLabel.Text = TextBox1.Text
             Else
-                Timer1.Enabled = True  'restart timer
+                Timer1.Enabled = True                       'Restart timer
                 Exit Sub
-
             End If
 
         Else
@@ -234,56 +209,53 @@ Public Class Form1
             'TextBox1.Text = " "
         End If
         Timer1.Enabled = True
-
-
     End Sub
 
     Private Sub ServoTrackBar_Scroll_1(sender As Object, e As EventArgs) Handles ServoTrackBar.Scroll
-        ServoStateLabel.Text = ServoTrackBar.Value
-        byte2Label.Text = Hex(ServoTrackBar.Value)
-        byte2 = ServoTrackBar.Value
+        ServoStateLabel.Text = ServoTrackBar.Value    'Displays value of track bar
+        byte2Label.Text = Hex(ServoTrackBar.Value)    'Displays hex equalient of track bar value
+        byte2 = ServoTrackBar.Value                   'Sets value of byte to TX
+        'Loads handshake, one byte of data and null character into TX array
+        'Handshake = $ (ascii decimal equalient of 36)
+        'Decimal values are loaded into byte array
+        'Byte array converts numbers to hex.
         TXData = {36, CInt(byte2), 0}
-        'TXData(0) = 36
-        'TXData(1) = CInt(byte2)
-        'TXData(2) = 0                   'Sends Null
-
-
+        'Display send data to text box in loop back test
         TextBox1.Text = TXData(0) & TXData(1) & TXData(2)
-
+        'Call sub to send data
         SendData()
-
     End Sub
 
-
-
-    'Establishs communication and displays received data from the analog inputs
+    'Establishes communication and displays received data from the ADC
     Sub AnalogIn()
-
-
+        'ADC input enabled with checkbox
         If AnInCheckBox.Checked = True Then
+            'Loads handshake, one byte of data and ADC handshake into TX array
+            'Handshake = $ (ascii decimal equalient of 36)
+            'ADC handshake = # (ascii decimal equalient of 35)
+            'Decimal values are loaded into byte array
+            'Byte array converts numbers to hex.
             TXData = {36, CInt(byte2), 35}
-            'TXData(0) = 36                         'Send command for analog in 1
-            'TXData(1) = CInt(byte2)
-            'TXData(2) = 35
+            'Display send data to text box in loop back test
             TextBox1.Text = TXData(0) & TXData(1) & TXData(2)
+            'Call sub to send data
             SendData()
+            'Call sub to convert RX data from PIC to Voltages and number of bits
             AnVoltage()
-            VA1Label.Text = vOut                   'Display input voltage
-            DA1Label.Text = dOut                   'Display recieved binary value
+
+            VA1Label.Text = vOut                   'Display input voltage of ADC (0-5V)
+            DA1Label.Text = dOut                   'Display recieved binary value (0-1023)
+            'Display temperature from temperature sensor when check box is true
             If TempCheckBox.Checked = True Then
-                TempLabel.Text = tOut & Chr(176) & Chr(70)
+                TempLabel.Text = tOut & Chr(176) & Chr(70)   'Displays temperature and "°F" 
             ElseIf TempCheckBox.Checked = False Then
-                TempLabel.Text = Chr(176) & Chr(70)
-
+                TempLabel.Text = Chr(176) & Chr(70)   'Displays "°F" 
             End If
-
         End If
-
-
-
     End Sub
 
-    'Converts received byte 1 and 2 to binary value (0 to 1024) and voltage (0 to 3.3)
+    'Converts received bytes 4 and 5 from PIC
+    'Calculations for ADC input and output and temperature sensor
     Sub AnVoltage()
         Dim vPort As Double             'Variables to manipulate received data
         Dim n1 As Double
@@ -291,46 +263,39 @@ Public Class Form1
         Dim n3 As Double
         Dim n4 As Double
 
-        n1 = dataIn4 * 4
-        n2 = dataIn5 / 64
-        n3 = Fix(n1 + n2)
-        n4 = 5 / 1023
-        vPort = n4 * n3
-        vOut = Format(vPort, "n")
-        dOut = n3
-
-        tOut = vOut / 0.01
-
+        n1 = dataIn4 * 4                'RX high byte multipled by 4 
+        n2 = dataIn5 / 64               'RX low byte is divided by 64
+        n3 = Fix(n1 + n2)               'Limits number to 2 decimal places
+        n4 = 5 / 1023                   'Resolution of ADC
+        vPort = n4 * n3                 'Calculates voltage in of ADC
+        vOut = Format(vPort, "n")       'Format results to 2 decimal palces 
+        dOut = n3                       'Result of bits out of ADC
+        tOut = vOut / 0.01              'Calculates temperature from ADC input voltage
     End Sub
 
-
-
-
+    'Function to tramsmit serial data
     Function SendData() As Byte
         Timer1.Enabled = False                                 'Disable timer when writing to serial port
         If portState = True Then
-            SerialPort1.Write(TXData, 0, TXData.Length)                    'Write byte array to serial port
-            OutTermListBox.Items.Add(TextBox1.Text)     'update output list box
-            'TXLabel.Text = TXData(0) & TXData(1) & TXData(2)   'Value of byte array displayed for user to see
-            TXLabel.Text = Chr(TXData(0)) & " " & TXData(1) & " " & Chr(TXData(2))   'Value of byte array displayed for user to see
+            SerialPort1.Write(TXData, 0, TXData.Length)        'Write byte array to serial port
+            OutTermListBox.Items.Add(TextBox1.Text)            'Update output list box (loopback test)
+            'Display content of byte array in labels
+            'Handshakes displayed as ascii characters
+            'One label shows other data in decimal values the other as hex
+            TXLabel.Text = Chr(TXData(0)) & " " & TXData(1) & " " & Chr(TXData(2))
             TX2Label.Text = Chr(TXData(0)) & " " & Hex(TXData(1)) & " " & Chr(TXData(2))
-        Else
+        Else                                                     'Alerts user if com port not connected
             MsgBox("Please configure and open serial port to procede")
         End If
         Timer1.Enabled = True
-
-
     End Function
-
 
     'Asynchronous Serial receive subroutine triggered by serial receive event
     Private Sub DataReceived(sender As Object, e As EventArgs) Handles SerialPort1.DataReceived
-        'readSize = SerialPort1.BytesToRead
+        receiveCount += 1                                   'Increment recieve byte counter
+        SerialPort1.Read(receiveByte, 0, 4)                 'Read serial buffer value
 
-        receiveCount += 1                                           'increment recieve byte counter
-        SerialPort1.Read(receiveByte, 0, 4)                         'read serial buffer value
-
-        Select Case newData                                         'test case to determine where to place info
+        Select Case newData                                 'Test case to determine where to place info
             Case = 0
                 dataIn1 = receiveByte(0)
             Case = 1
@@ -349,25 +314,21 @@ Public Class Form1
                 dataIn8 = receiveByte(0)
 
             Case Else
-                newData = 0                                             'possible over flow, reset newData
+                newData = 0                                   'Possible over flow, reset newData
                 Exit Sub
 
         End Select
-        newData += 1                                                    'Increment newData once loop is complete
-
-
-
+        newData += 1                                          'Increment newData once loop is complete
     End Sub
 
-
-    'Clears received data list box
+    'Clears received data list box and labels
     Private Sub InClearButton_Click(sender As Object, e As EventArgs) Handles InClearButton.Click
         InTermListBox.Items.Clear()
         RXLabel.Text = " "
         RX2Label.Text = " "
     End Sub
 
-    'Clears sent data list box
+    'Clears sent data list box and labels
     Private Sub OutClearButton_Click(sender As Object, e As EventArgs) Handles OutClearButton.Click
         OutTermListBox.Items.Clear()
         TXLabel.Text = " "
@@ -383,7 +344,6 @@ Public Class Form1
     Private Sub QuitButton_Click(sender As Object, e As EventArgs) Handles QuitButton.Click
         Me.Close()
     End Sub
-
 
 End Class
 
